@@ -19,7 +19,7 @@ test_psgi $fav_app, sub {
     my $res = $cb->(GET '/favicon.ico');
 
     is $res->code, 200;
-    is $res->content_type, 'image/x-icon';
+    is $res->content_type, 'image/png';
     my $img = Imager->new(data => $res->content);
     is $img->getwidth,  32;
     is $img->getheight, 32;

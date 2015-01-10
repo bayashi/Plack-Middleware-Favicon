@@ -22,9 +22,9 @@ our @DEFAULT_FAVICONS = (
                 and $env->{HTTP_USER_AGENT} =~ m!MSIE (?:[1-9]|10)\.!;
         },
         path => qr!^/favicon\.ico!, size => [16, 16],
-        type => 'ico',
+        type => 'ico', mime_type => 'image/x-icon',
     },
-    { path => qr!^/favicon\.ico!, size => [16, 16], },
+    { path => qr!^/favicon\.ico!, size => [16, 16], mime_type => 'image/x-icon', },
     { path => qr!^/favicon-16x16\.png!, size => [16, 16], },
     { path => qr!^/favicon-32x32\.png!, size => [32, 32], },
     { path => qr!^/favicon-96x96\.png!, size => [96, 96], },
@@ -67,7 +67,7 @@ sub call {
         next if $f->{cond} && !$f->{cond}->($self, $env);
         if ($env->{PATH_INFO} =~ m!$f->{path}!) {
             $f->{type}      ||= 'png';
-            $f->{mime_type} ||= 'image/x-icon';
+            $f->{mime_type} ||= 'image/png';
             my $content = $self->_generate($f);
             return [
                 200,
