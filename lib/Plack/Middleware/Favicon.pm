@@ -80,7 +80,8 @@ sub call {
             ];
         }
     }
-    return [404, ['Content-Type' => 'text/plain'], ['Not Found']];
+
+    $self->app->($env);
 }
 
 sub _generate {
