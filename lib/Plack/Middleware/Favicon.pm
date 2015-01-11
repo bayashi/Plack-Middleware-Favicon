@@ -14,7 +14,11 @@ use Plack::Util::Accessor qw/
 
 our $VERSION = '0.01';
 
-our @DEFAULT_FAVICONS = (
+our @DEFAULT_FAVICONS = map {
+    $_->{type}      ||= 'png';
+    $_->{mime_type} ||= 'image/png';
+    $_;
+} (
     {
         cond => sub {
             my ($self, $env) = @_;
@@ -58,6 +62,12 @@ sub prepare_app {
     my $imager = Imager->new(file => $self->src_image_file)
         or croak Imager->errstr;
     $self->src_image_obj($imager);
+
+    if ($self->cache) {
+        for my $f (@{$self->custom_favicons || []}, @DEFAULT_FAVICONS) {
+            $self->_generate($f);
+        }
+    }
 }
 
 sub call {
@@ -66,8 +76,6 @@ sub call {
     for my $f (@{$self->custom_favicons || []}, @DEFAULT_FAVICONS) {
         next if $f->{cond} && !$f->{cond}->($self, $env);
         if ($env->{PATH_INFO} =~ m!$f->{path}!) {
-            $f->{type}      ||= 'png';
-            $f->{mime_type} ||= 'image/png';
             my $content = $self->_generate($f);
             return [
                 200,

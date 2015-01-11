@@ -15,6 +15,8 @@ use Plack::Middleware::Favicon;
         cache => $cache,
     )->to_app;
 
+    like $cache->get('16:16:png'), qr/PNG/;
+
     test_psgi $fav_app, sub {
         my $cb = shift;
         my $res = $cb->(GET '/favicon.ico');

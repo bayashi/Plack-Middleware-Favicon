@@ -10,7 +10,10 @@ use Plack::Middleware::Favicon;
 my $fav_app = Plack::Middleware::Favicon->new(
     src_image_file  => 'share/src_favicon.png',
     custom_favicons => [
-        { path => qr!^/favicon\.ico!, size => [32, 32], },
+        {
+            path => qr!^/favicon\.ico!, size => [32, 32],
+            type => 'png', mime_type => 'image/png',
+        },
     ],
 )->to_app;
 
