@@ -1,4 +1,7 @@
 Revision history for Perl extension Plack::Middleware::Favicon
 
+0.02    Sun Jan 11 12:57:48 JST 2015
+        - generate cache in prepare_app phase with the cache option
+
 0.01    Sat Jan 10 17:20:05 2015
         - original version
