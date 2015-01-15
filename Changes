@@ -1,5 +1,9 @@
 Revision history for Perl extension Plack::Middleware::Favicon
 
+0.03    Fri Jan 16 08:49:01 JST 2015
+        - fix and enhance test
+        - add LICENSE file
+
 0.02    Sun Jan 11 12:57:48 JST 2015
         - generate cache in prepare_app phase with the cache option
 

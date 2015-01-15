@@ -12,7 +12,7 @@ use Plack::Util::Accessor qw/
     custom_favicons
 /;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 our @DEFAULT_FAVICONS = map {
     $_->{type}      ||= 'png';
