@@ -7,6 +7,9 @@ use Imager;
 
 use Plack::Middleware::Favicon;
 
+note "read types:\t".  join(', ', sort Imager->read_types);
+note "write types:\t". join(', ', sort Imager->write_types);
+
 my $fav = Plack::Middleware::Favicon->new(
     src_image_file => 'share/src_favicon.png',
 );
