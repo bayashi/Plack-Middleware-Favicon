@@ -59,8 +59,14 @@ sub prepare_app {
     croak "not found or not a file:". $self->src_image_file
         unless -f $self->src_image_file;
 
-    my $imager = Imager->new(file => $self->src_image_file)
-        or croak Imager->errstr;
+    my $imager = Imager->new(file => $self->src_image_file);
+    unless ($imager) {
+        croak sprintf(
+            "could not create object from %s. %s",
+            $self->src_image_file,
+            Imager->errstr || '',
+        );
+    }
     $self->src_image_obj($imager);
 
     if ($self->cache) {
