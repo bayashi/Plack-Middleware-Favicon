@@ -1,5 +1,8 @@
 Revision history for Perl extension Plack::Middleware::Favicon
 
+0.04    Sat Jan 17 12:31:42 JST 2015
+        - fix tests: if system doesn't have lib*** for Imager.
+
 0.03    Fri Jan 16 08:49:01 JST 2015
         - fix and enhance test
         - add LICENSE file

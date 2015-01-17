@@ -41,7 +41,7 @@
    "provides" : {
       "Plack::Middleware::Favicon" : {
          "file" : "lib/Plack/Middleware/Favicon.pm",
-         "version" : "0.03"
+         "version" : "0.04"
       }
    },
    "release_status" : "stable",
@@ -56,5 +56,5 @@
          "url" : "http://github.com/bayashi/Plack-Middleware-Favicon"
       }
    },
-   "version" : "0.03"
+   "version" : "0.04"
 }
