@@ -7,19 +7,16 @@ use Imager;
 
 use Plack::Middleware::Favicon;
 
-note "read types:\t".  join(', ', sort Imager->read_types);
-note "write types:\t". join(', ', sort Imager->write_types);
-
-my $fav;
-eval {
-    $fav = Plack::Middleware::Favicon->new(
-        src_image_file => 'share/src_favicon.png',
-    );
-};
-if ($@) {
-    note "Perhaps your system doesn't have libpng. So you have to install libpng.";
-    fail "$@";
+unless ( grep { $_ =~ m!png! } Imager->read_types ) {
+    plan skip_all => "You must install 'libpng'";
 }
+unless ( grep { $_ =~ m!ico! } Imager->write_types ) {
+    plan skip_all => "You must install 'libico'";
+}
+
+my $fav = Plack::Middleware::Favicon->new(
+    src_image_file => 'share/src_favicon.png',
+);
 
 isa_ok $fav, 'Plack::Middleware::Favicon';
 

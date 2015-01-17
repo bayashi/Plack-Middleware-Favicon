@@ -7,6 +7,13 @@ use Imager;
 
 use Plack::Middleware::Favicon;
 
+unless ( grep { $_ =~ m!png! } Imager->read_types ) {
+    plan skip_all => "You must install 'libpng'";
+}
+unless ( grep { $_ =~ m!ico! } Imager->write_types ) {
+    plan skip_all => "You must install 'libico'";
+}
+
 my $fav_app = Plack::Middleware::Favicon->new(
     src_image_file  => 'share/src_favicon.png',
     custom_favicons => [
