@@ -170,6 +170,47 @@ You don't need to prepare favicon images any more if you use this module.
 =back
 
 
+=head1 MIDDLEWARE OPTIONS
+
+=head2 cache
+
+If you'd like this module to cache images for response, provide the I<cache> option with an object supporting the L<Cache> API (e.g. I<Cache::FileCache>, I<Cache::Memory::Simple>). Specifically, an object that supports C<get($key)> and C<set($key, $value, $expires)> methods.
+
+    use Cache::Memory::Simple;
+
+    builder {
+        enable 'Favicon',
+            src_image_file  => 'src_favicon.png',
+            cache => Cache::Memory::Simple->new;
+    };
+
+=head2 custom_favicons
+
+If you'd provide custom favicon images, set the I<custom_favicons> option.
+
+    builder {
+        enable 'Favicon',
+            src_image_file  => 'src_favicon.png',
+            custom_favicons => [
+                { path => qr!^/foo\.png!, size => [32, 32],
+                  type => 'png', mime_type => 'image/png' },
+            ];
+    };
+
+=head2 callback
+
+If you'd want to filter image, set the I<callback> option as code ref.
+
+    builder {
+        enable 'Favicon',
+            src_image_file  => 'src_favicon.png',
+            callback => sub {
+                my ($self, $f, $img) = @_;
+                $img->filter(type => "unsharpmask", stddev => 1, scale => 0.5);
+            };
+    };
+
+
 =head1 REPOSITORY
 
 Plack::Middleware::Favicon is hosted on github: L<http://github.com/bayashi/Plack-Middleware-Favicon>
