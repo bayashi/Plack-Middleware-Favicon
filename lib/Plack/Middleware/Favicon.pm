@@ -10,6 +10,7 @@ use Plack::Util::Accessor qw/
     src_image_obj
     cache
     custom_favicons
+    callback
 /;
 
 our $VERSION = '0.04';
@@ -109,12 +110,18 @@ sub _generate {
 
     my ($x, $y) = @{ $f->{size} };
 
-    my $favicon = '';
-    $self->src_image_obj->scale(
+    my $img = $self->src_image_obj->scale(
         xpixels => $x,
         ypixels => $y,
         type    => 'nonprop',
-    )->write(
+    );
+
+    if ($self->callback) {
+        $img = $self->callback->($self, $f, $img);
+    }
+
+    my $favicon = '';
+    $img->write(
         data => \$favicon,
         type => $f->{type},
     );
